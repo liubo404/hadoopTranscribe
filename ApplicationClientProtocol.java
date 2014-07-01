@@ -83,4 +83,91 @@ public interface ApplicationClientProtocol{
     public GetNewApplicationResponse getNewApplication(
                      GetNewApplicationRequest request)
     throws YarnException, IOException;
+
+    /**
+       The interface used by clients to submit a new application to the
+       RescourceManager.
+
+       The client is required to provide details such as queue,
+       {@link Resouces} required to run the ApplicationMaster,
+       the equivalent of ContainerLaunchContext for launching the
+       ApplicationMaster etc. via the SubmitApplicationRequest.
+
+       Currently the ResourceManager sends an immediate (empty)
+       SubmitApplicationResponse on aacepting the submission and throws
+       an exception if it rejects the submission. However, this call needs to be
+       followed by {@link #getApplicationReport(GetApplicationReposrtRequest)}
+       to make sure that the application gets properly submitted - obtaining a
+       {@link SubmitApplicationResponse} from ResourceManager doesn't guarantee
+       that RM 'remembers' this application beyond failover or restartt. If RM
+       failover or RM restart happens before ResourceManager saves the
+       application's state successfully, the subsequent
+       {@link #getApplicationReport(GetApplicationReportRequest)} will throw
+       a {@link ApplicationNotFoundException}. The Clients need to be re-submit
+       the application with the same {@link ApplicationSubmissionContext} when
+       it encounters the {@link ApplicationNotFoundException} on the
+       {@link #getApplicationReport(GetApplicationReportRequest)} call.
+
+       During the submission process, it checkes whether the application already
+       exists. If the application exists, it will simply return
+       SubmissionApplicationResponse.
+
+       In secure mode, the ResourceManager verifies access to queues etc. before
+       accepting the application submission.
+
+       @param request request to submit a new application
+       @return (empty) response on accepting the submission
+       @throws YarnException
+       @throws IOException
+       @throws InvalidResourceRequestException
+           The exception is thrown when a {@link ResourceRequest} is out of
+           the range of the configured lower and upper resource boundaries.
+       @see #getNewApplication(GetNewApplicationRequest)
+     */
+    @Public
+    @Stable
+    @Idempotent
+    public SubmitApplicationResponse submitApplication(
+                     SubmitApplicationRequest request)
+        throws YarnException, IOException;
+
+    /**
+     * <p> The interface used by clients to request the
+     * <code>ResourceManager</code> to abort submitted application.</p>
+     */
+    @Public
+    @Stable
+    @Idempotent
+    public KillApplicationResponse forceKillApplication(
+                                    KillApplicationRequest request)
+        throws YarnException, IOException;
+
+    /**
+     * <p> The interface used by clients to get a report of an Application
+     * from the <code>ResourceManager</code>.</p>
+     */
+
+    @Public
+    @Stable
+    @Idempotent
+    public GetApplicationReportResponse getApplicationReport(
+                                     GetApplicationReportRequest request)
+        throws YarnException, IOException;
+
+
+    @Public
+    @Stable
+    @Idempotent
+    public GetClusterMetricsResponse getClusterMetrics(
+                                       GetClusterMetricsRequest request)
+        throws YarnException, IOException;
+
+
+    @Public
+    @Stable
+    @Idempotent
+    public GetApplicationResponse getApplications(
+                                                  GetApplicationRequest request)
+        throws YarnException, IOException;
+
 }
