@@ -170,4 +170,140 @@ public interface ApplicationClientProtocol{
                                                   GetApplicationRequest request)
         throws YarnException, IOException;
 
+
+    /**
+     * <p>The interface used by clients to get a report of all nodes in the
+     * cluster form the <code>ResourceManager</code>.</p>
+     *
+     */
+    @Public
+    @Stable
+    @Idempotent
+    public GetClusterNodesResponse getClusterNodes(
+                                                   GetClusterNodesRequest request)
+        throws YarnException, IOException;
+
+
+    @Public
+    @Stable
+    @Idempotent
+    public GetQueueInfoResponse getQueueInfo(
+                                             GetQueueInfoRequest request)
+        throws YarnException, IOException;
+
+
+
+    /**
+     * <p>The interface used by clients to get information about <em>queue
+     * acls</em> for <em>current user</em> from the <code>ResourceManager</code>.
+     * </p>
+     *
+     *
+     */
+    @Public
+    @Stable
+    @Idempotent
+    public GetQueueUserAclsInfoResponse getQueueUserAcls(
+                                           GetQueueUserAclsInfoRequest request)
+        throws YarnException, IOException;
+
+
+    /**
+     * <p>The interface used by clients to get delegation token, enabling the
+     * containers to be able to talk to the service using those tokens.
+     *
+     */
+    @Public
+    @Stable
+    @Idempotent
+    public GetDelegationTokenResponse getDelegationToken(
+                                            GetDelegationTokenRequest request)
+        throws YarnException, IOexception;
+
+    /**
+     * Renew an existing delegation {@link Token}.
+     */
+    @Private
+    @Unstable
+    @Idempotent
+    public RenewDelegationTokenResponse renewDelegationToken(
+                               RenewDelegationTokenRequest request)
+        throws YarnException, IOException;
+
+    /**
+     * Cancel an existing delegation {@link Token}.
+     */
+    @Private
+    @Unstable
+    @Idempotent
+    public CancelDelegationTokenReponse cancelDelegationToken(
+                                            CancelDelegationTokenRequest request)
+        throws YarnException, IOException;
+
+
+    /**
+     * Move an application to a new queue.
+     * @param request the application ID and the target queue
+     * @return an empty response
+     * @throws YarnException
+     * @throws IOException
+     */
+    @Public
+    @Unstable
+    @Idempotent
+    public MoveApplicationAcrossQueuesResponse moveApplicationAcrossQueues(
+                        MoveApplicationAcrossQueuesRequest request)
+        throws YarnException, IOExcetption;
+
+
+    /**
+     * The interface used by clients to get a report of an Application Attempt
+     * from the ResourceManager.
+     * The client, via GetApplicationAttemptReportRequest provides the
+     * ApplicationAttemptId of the application attempt.
+     *
+     * In secure mode, the ResourceManager verifies access to the method
+     * before accepting the request.
+     *
+     * The ResourceManager responds with a GetApplicationAttemptReportResponse
+     * which includs the ApplicationAttemptReort for the application attempt.
+     *
+     * If the user does not have <code>VIEW_APP</code> access then the following
+     * fields in the report will be set to stubbed values:
+     *
+     */
+    @Public
+    @Unstable
+    @Idempotent
+    public GetApplicationAttemptReportResponse getApplicationAttemptReport(
+                          GetApplicationAttemptReportRequest request)
+        throws YarnException, IOException;
+
+    /**
+     *The interface used by clients to get a report of all Application Attempts
+     * in the cluster from the ResourceManager
+     */
+    @Public
+    @Unstable
+    @Idempotent
+    public GetApplicationAttemptsResponse getApplicationAttemps(
+                     GetApplicationAttemptsRequest request)
+        throws YarnException, IOException;
+
+    /**
+     *
+     */
+    @Public
+    @Unstable
+    @Idempotent
+    public GetContainerReportResponse getContainerReport(
+                                         GetContainerReportRequest request)
+        throws YarnException, IOException;
+
+
+    @Public
+    @Unstable
+    @Idempotent
+    public GetContainersResponse getContainers(GetContainersRequest request)
+        throws YarnException, IOException;
 }
