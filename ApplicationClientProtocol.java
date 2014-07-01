@@ -291,7 +291,22 @@ public interface ApplicationClientProtocol{
         throws YarnException, IOException;
 
     /**
+     *The interface used by clients to get a reportofa a container from the
+     *<code>ResourceManager</code>
+     *The client, via {@link GetContainerReportRequest} provides the
+     *{@link ContainerId} of the container.
+     *In secure mode, the <code>ResourceManager</code> verifies access to the
+     *method before accepting the request.
      *
+     *The <code>ResourceManager</code> responds with a
+     *{@link GetContainerReportResponse} which includes the
+     *{@link ContainerReport} for the container.
+     *
+     *@param request
+     *    request for a container report
+     *@return container report
+     *@throws YarnException
+     *@throws IOException
      */
     @Public
     @Unstable
@@ -301,6 +316,24 @@ public interface ApplicationClientProtocol{
         throws YarnException, IOException;
 
 
+    /**
+     * <p> The interface used by clients to get a report of Containers for an
+     * appliaction from the <code>ResourceManager</code></p>
+     * The client, via {@link GetContainersRequest} provides the
+     * {@link ApplicationAttemptId} of the application attempt.
+     * In secure mode, the ResourceManager verifies access to the method before
+     * accepting the request.
+     *
+     * The <code>ResourceManager</code> responds with a
+     * {@link GetContainersResponse} which includes a list of
+     * {@link ContainersReport} for all the containers of a sepecific application
+     * attempt.
+     * @param request
+     *        request for a list of container reports of an application attempt.
+     * @return reports on all containers of an application attempt
+     * @throws YarnException
+     * @throws IOException
+     */
     @Public
     @Unstable
     @Idempotent
