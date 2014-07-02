@@ -90,12 +90,17 @@ public interface ApplicationHistoryProtocol {
     public GetApplicationAttemptsResponse getApplicationAttempts(
                                                                  GetApplicationAttemptsRequest request)
         throws YarnException, IOException;
+
     @Public
     @Unstable
     public GetContainerReportResponse getContainerReport(
                                                          GetContainerReportRequest request)
         throws YarnException, IOException;
 
+    /**
+     * The interface used by clients to get a report of Containers for an application attempt from
+     * the ApplicationHistoryServer
+     */
     @Public
     @Unstable
     public GetContainersResponse getContainers(GetContainersRequest request)
