@@ -162,10 +162,16 @@ public abstract class AllocateResponse{
     public abstract void setIncreasedContainers(
                            List<ContainerResourceIncrease> increasedContainers);
 
+    /**
+     * Get the list of newly decreased containers by NodeManager
+     */
     @Public
     @Stable
     public abstract List<ContainerResourceDecrease> getDecreasedContainers();
 
+    /**
+     * Set the list of newly decreased containers by NodeManager
+     */
     @Private
     @Unstable
     public abstract void setDecreasedContainers(List<ContainerResourceDecrease> decreasedContainers);
