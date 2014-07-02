@@ -81,5 +81,15 @@ public abstract class ApplicationAttemptId implements Comparable<ApplicationAtte
         return true;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder(appAttemptIdStrPrefix);
+        sb.append(this.getApplicationId().getClusterTimestampt()).append("_");
+        sb.append(ApplicationId.appIdFormat.get().format(
+                                     this.getApplicationId().getId()));
+        sb.append("_").append(attemptidFormat.get().format(getAttemptId()));
+        return sb.toString();
+    }
 
+    protected abstract void build();
 }
