@@ -69,4 +69,31 @@ public abstract class Applicationid implements Comparable<ApplicationId> {
         return appIdStrPrefix + this.getClusterTimestamp() + "_"
             + appIdFormat.get().format(getId());
     }
+
+    @Override
+        public int hashCode() {
+        final int prime = 371237;
+        int result = 6521;
+        long clusterTimestamp = getClusterTimestamp();
+        result = prime * result
+            + (int) (clusterTimestamp ^ (clusterTimestamp >>> 32));
+        result = prime * result + getId();
+        return result;
+    }
+
+    @Override
+        public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        if(getClass() != obj.getClass())
+            return false;
+        Applicationid other = (ApplicationId) obj;
+        if(this.getClusterTimestamp() != other.getClusterTimestamp())
+            return false;
+        if(this.getId() != other.getId())
+            return false;
+        return true;
+    }
 }
